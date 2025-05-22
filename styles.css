@@ -1,0 +1,49 @@
+/* ...existing code... */
+
+/* Center align the countdown timer */
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Make buttons the same size */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.button-container button {
+  min-width: 200px;
+  padding: 15px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+/* Fix for the banner/navbar issue with scrolling */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Add padding to the main content to account for fixed header */
+main {
+  padding-top: 100px; /* Adjust this value based on your header height */
+}
+
+/* ...existing code... */
