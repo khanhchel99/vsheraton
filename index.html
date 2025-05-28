@@ -878,6 +878,70 @@
                 bottom: 70px;
             }
         }
+        /* RSVP Success Popup */
+        .rsvp-success-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rsvp-success-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.5s;
+            position: relative;
+        }
+
+        .rsvp-success-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #d4a373;
+        }
+
+        .rsvp-success-icon {
+            font-size: 4rem;
+            color: #d4a373;
+            margin-bottom: 15px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .rsvp-success-message {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .rsvp-success-close {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #d4a373;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rsvp-success-close:hover {
+            background-color: #c69c6d;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 
@@ -1052,7 +1116,17 @@
               </div>
           </div>
       </div>
-        
+        <!-- RSVP Success Popup -->
+      <div class="rsvp-success-popup" id="rsvpSuccessPopup">
+          <div class="rsvp-success-content">
+              <div class="rsvp-success-icon">
+                  <i class="fas fa-heart"></i>
+              </div>
+              <h2 class="rsvp-success-title">Cảm ơn!</h2>
+              <p class="rsvp-success-message">Cảm ơn bạn đã xác nhận tham gia! ❤️</p>
+              <button class="rsvp-success-close" id="rsvpSuccessClose">Đóng</button>
+          </div>
+      </div>
         <footer>
             <p>We can't wait to celebrate with you!</p>
             <p>Hoàng Anh & Văn Khánh</p>
@@ -1115,9 +1189,14 @@
             .then(response => response.json())
             .then(data => {
                 if(data.result === 'success') {
-                    formStatus.innerHTML = '<p style="color: green;">Cảm ơn bạn đã xác nhận tham dự!</p>';
                     this.reset();
-                    document.getElementById('guests').value = 0; // Reset guests to 1
+                    document.getElementById('guests').value = '0';
+                    
+                    // Hide form status
+                    formStatus.style.display = 'none';
+                    
+                    // Show success popup
+                    rsvpSuccessPopup.style.display = 'flex';
                 } else {
                     formStatus.innerHTML = '<p style="color: red;">Có lỗi xảy ra. Vui lòng thử lại sau.</p>';
                     console.error('Error:', data.error);
@@ -1340,6 +1419,22 @@
                 clearTimeout(noteTimeout);
             });
         })();
+
+        // RSVP Success Popup functions
+        const rsvpSuccessPopup = document.getElementById('rsvpSuccessPopup');
+        const rsvpSuccessClose = document.getElementById('rsvpSuccessClose');
+        
+        // Close RSVP Success popup when close button is clicked
+        rsvpSuccessClose.addEventListener('click', function() {
+            rsvpSuccessPopup.style.display = 'none';
+        });
+        
+        // Close RSVP Success popup when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === rsvpSuccessPopup) {
+                rsvpSuccessPopup.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
